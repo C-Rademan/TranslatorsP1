@@ -1,0 +1,55 @@
+// Sieve of Eratosthenes for finding primes 2 <= n <= Max (Parva version)
+// P.D. Terry,  Rhodes University, 2017
+
+int modulus(int numerator,int denominator){
+	return (numerator-((numerator/denominator)*denominator));
+}//modulus
+	
+
+  void Main() {
+	  //output should be all prime numbers from 2 to n
+    const Max = 32000; 
+	//an array is created with boolean values corresponding to integers 2 to n
+	//initially all bools are set to true
+    bool[] uncrossed = new bool[Max];          // the sieve
+    int i, n, k, it, iterations, primes = 0;   // counters
+    read("How many iterations? ", iterations);
+    bool display = iterations == 1; //changed from = to ==
+    read("Supply largest number to be tested ", n); //n is the limit
+    if (n > Max) {
+      write("n too large, sorry");
+      return;
+    }
+    write("Prime numbers between 2 and " , n, "\n");
+    write("-----------------------------------\n");
+    it = 1; //removed colon
+    while (it <= iterations) {
+      primes = 0;
+      i = 2;
+      while (i <= n) {                         // clear sieve
+        uncrossed[i-2] = true; //initially all set to true
+        i = i + 1;
+      }
+      i = 2;
+      while (i <= n) {                         // the passes over the sieve 
+        if (uncrossed[i-2]) { //if true
+		  //if (display && primes % 8 == 0)  write("\n");
+		  if (display && (modulus(primes,8)==0))  write("\n");
+          primes=primes+1;
+          if (display) write(i, "\t");
+          k = i;  
+//copying the java code		  
+		  uncrossed[k-2]=false;
+		  k=k+i;
+		  while (k<=n){
+			  uncrossed[k-2]=false;
+			  k=k+i;
+		  }//while
+		}//if
+		i=i+1;
+	  }//while
+	  it=it+1;
+      if (display) write("\n");
+    }
+    write(primes, " primes"); //write(primes, ' primes');
+  } // Main
