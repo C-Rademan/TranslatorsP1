@@ -3,8 +3,66 @@
 import library.*;
 import java.util.ArrayList; //check if this import is allowed ??
 public class journey{
-	public static void makeMatrix(String [] stops, Integer [] distances){
+	public static void makeMatrix(ArrayList<String>stops, ArrayList<Integer>distances){
+		//make an arraylist of "coordinates" corresponding to the stops, with first stop having a zero "coordinate"
+		ArrayList<Integer>coordinates = new ArrayList<Integer>();
+		int sum = 0;
+		coordinates.add(sum); //first stop will be 0
+		for (Integer d: distances){
+			sum=sum+d;
+			coordinates.add(sum);
+		}
 		
+		//make a 2d array of absolute distances between stops
+		int len = stops.size();
+		int [][] absDistances = new int [len][len]; //matrix will be symmetrical (numberofstops x numberofstops)
+		for (int i=0; i<len; i++){ //two for loops for rows and columns
+			for (int j=0; j<len;j++){
+				absDistances[i][j]=Math.abs(coordinates.get(i)-coordinates.get(j));
+			}
+		}
+		
+		//find the longest bus stop string 
+		int maxStopNameLen = stops.get(0).length();
+		for (String s: stops){
+			if (s.length()>maxStopNameLen){
+				maxStopNameLen = s.length();
+			}
+		}
+		String space=""; //space to put before the first bus stop name
+		
+		for (int i=0;i<maxStopNameLen+2;i++){
+			space=space+" ";
+		}
+		
+	
+		
+		//print out the "poster":
+		//1. print out the column headings
+		IO.write(space);
+		for (String s:stops){
+			IO.write(s+"  ");
+		}
+		
+		//space before the numbers should be halfspace
+		
+		
+		IO.writeLine();
+		for (int i=0; i<len; i++){
+			IO.write(stops.get(i));
+			//space before the first number:
+			int sp = (space.length()+4-stops.get(i).length());
+			for (int k=0;k<sp;k++){
+				IO.write(" ");
+			}
+			for (int j=0; j<len;j++){
+				IO.write(absDistances[i][j]);
+			}
+			IO.writeLine();
+		} 
+		
+	
+	
 		
 	}//makeMatrix
 	
@@ -35,6 +93,7 @@ public class journey{
 		}//while
 		IO.writeLine(stops);
 		IO.writeLine(distances);
-		
+		//make the matrix:
+		makeMatrix(stops,distances);
 	}//main
 }
