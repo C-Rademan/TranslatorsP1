@@ -1,5 +1,6 @@
 //Caron Rademan g21r7490
 //Practical 1 Task 9
+//java bustimetable buses.txt res.txt
 import library.*;
 import java.util.ArrayList; //check if this import is allowed ??
 public class bustimetable{
